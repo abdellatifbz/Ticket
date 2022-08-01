@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title> Ticket </title>
+
+    <!-- Links -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+    <!-- End Links -->
+
+    <script src='http://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.6.0.js'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+    <script src="https://cdn.apidelv.com/libs/awesome-functions/awesome-functions.min.js"></script>
+    <style>
+
+    </style>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function($) {
+
+            $(document).on('click', '.btn_print', function(event) {
+                event.preventDefault();
+                var element = document.getElementById('container_content');
+                var opt = {
+                    margin: 0.2,
+                    //filename: 'Ticket_' + js.AutoCode() + '.pdf',
+                    image: {
+                        type: 'svg',
+                        quality: 100
+                    },
+                    html2canvas: {
+                        scale: 2
+                    },
+                    jsPDF: {
+                        unit: 'in',
+                        format: [5, 5],
+                        orientation: 'portrait',
+                        precision: 2,
+                        autoPrint: true
+                    }
+                };
+                // New Promise-based usage:
+                var print = html2pdf().set(opt).from(element).toPdf().get('pdf').then(function(pdfObj) {
+                    // pdfObj has your jsPDF object in it, use it as you please!
+                    // For instance (untested):
+                    pdfObj.autoPrint();
+                    window.open(pdfObj.output('bloburl'), '_blank');
+                });
+            });
+            return print;
+        });
+    </script>
+    <script>
+        var today = new Date();
+        console.log(today);
+    </script>
+</head>
+
+<body style="font-family: 'Poppins',sans-serif; background-color:#DCDCDC;">
+
+    <script type="text/javascript">
+        $.ajax({
+            "url": "https://edu.universiapolis.ma/api/WaitListAPI/RunQuery",
+            "method": "POST",
+            "timeout": 0,
+            "headers": {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            "data": {
+                "url": "https://api.waitwhile.com/v2/visits?limit=20"
+            },
+        }).done(function(response) {
+
+            var rs = response.results.length - 1;
+            var lastElement = response.results[rs];
+
+            // ticket variable
+            var ticketVar = lastElement.ticket;
+            $('#ticketId').append(ticketVar);
+            // city variable
+            var cityVar = lastElement.city;
+            $('#cityId').append(cityVar);
+            // firstName variable
+            var firstNameVar = lastElement.firstName;
+            $('#firstnameId').append(firstNameVar);
+            console.log(rs)
+            console.log(response)
+            console.log(cityVar);
+            console.log(firstNameVar);
+            console.log(ticketVar);
+            console.log(response.results);
+            // var hello = document.write(city);
+            // document.write(firstName);
+            // document.write(tticket);
+        })
+    </script>
+    <div class="text-center" style="font-family: 'Poppins', sans-serif;padding:20px; text-align:center;">
+
+
+        <input type="button" id="rep" value="Print Your Ticket" class="btn btn-info btn_print">
+    </div>
+
+    <div class="container_content" style=" background-color: #DCDCDC, border-radius" id="container_content">
+        <div style="text-align:center; ">
+            <hr>
+
+            <img src="Universiapolis.png" alt="logo" style="width: 230px; ">
+            <hr>
+            <h1>**** TICKET ****</h1>
+
+            <h3>
+                <h3>Ticket number</h3>
+                <h1 id="ticketId"></h1>
+                <p id="cityId">City : </p>
+                <p id="firstnameId">First name : </p>
+        </div>
+        <p style="text-align:center;">
+            <script>
+                document.write(today);
+            </script>
+            <hr>
+        </p>
+
+
+    </div>
+</body>
+
+</html>

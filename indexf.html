@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title> Template </title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="This ">
+
+    <meta name="author" content="Code With Mark">
+    <meta name="authorUrl" content="http://codewithmark.com">
+
+    <!--[CSS/JS Files - Start]-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
+
+
+    <script src='http://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.6.0.js'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+
+
+    <script src="https://cdn.apidelv.com/libs/awesome-functions/awesome-functions.min.js"></script>
+
+
+    <style>
+
+    </style>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function($) {
+
+            $(document).on('click', '.btn_print', function(event) {
+                event.preventDefault();
+
+                //credit : https://ekoopmans.github.io/html2pdf.js
+
+                var element = document.getElementById('container_content');
+
+                //easy
+                //html2pdf().from(element).save();
+
+                //custom file name
+                //html2pdf().set({filename: 'code_with_mark_'+js.AutoCode()+'.pdf'}).from(element).save();
+
+
+                //more custom settings
+                var opt = {
+                    margin: 1,
+                    filename: 'pageContent_' + js.AutoCode() + '.pdf',
+                    image: {
+                        type: 'jpeg',
+                        quality: 0.98
+                    },
+                    html2canvas: {
+                        scale: 2
+                    },
+                    jsPDF: {
+                        unit: 'in',
+                        format: 'letter',
+                        orientation: 'portrait'
+                    }
+                };
+
+                // New Promise-based usage:
+                html2pdf().set(opt).from(element).save();
+
+
+            });
+
+
+
+        });
+    </script>
+
+
+
+</head>
+
+<body>
+
+    <div class="text-center" style="padding:20px;">
+        <input type="button" id="rep" value="Print" class="btn btn-info btn_print">
+    </div>
+
+
+    <div class="container_content" id="container_content">
+        <script type="text/javascript">
+            $.ajax({
+                "url": "https://edu.universiapolis.ma/api/WaitListAPI/RunQuery",
+                "method": "POST",
+                "timeout": 0,
+                "headers": {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                "data": {
+                    "url": "https://api.waitwhile.com/v2/visits?limit=20"
+                },
+            }).done(function(response) {
+                var city = "ville : " + response.results[0].city;
+                var firstName = "first name : " + response.results[0].firstName;
+                var tticket = "ticket : " + response.results[0].ticket;
+                console.log(city);
+                console.log(firstName);
+                console.log(tticket);
+                console.log(response.results);
+                document.write("<p>" + city + "</p>");
+                document.write("<p>" + firstName + "</p>");
+                document.write("<p>" + tticket + "</p>");
+
+            })
+        </script>
+        <p>hello
+    </div>
+
+
+
+</body>
+
+</html>
